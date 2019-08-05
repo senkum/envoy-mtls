@@ -2,8 +2,8 @@
 
 # Generate the certificate
 /opt/generate-certificate.sh service2
-/opt/generate-validation-certificate.sh service1 frontproxy service1
-/opt/certificate-watcher.sh service1 frontproxy service1 &
+/opt/generate-validation-certificate.sh service2 frontproxy service1
+/opt/certificate-watcher.sh service2 frontproxy service1 &
 
 # Start the service
 python3 /opt/service2.py &

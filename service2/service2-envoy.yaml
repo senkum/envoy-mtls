@@ -26,11 +26,16 @@ static_resources:
                   - name: envoy.router
                     typed_config: {}
           tls_context:
+            require_client_certificate: true
             common_tls_context:
               tls_certificate_sds_secret_configs:
                 name: server-cert-and-key
                 sds_config:
                   path: /opt/envoy-secret.yaml
+              validation_context_sds_secret_config:
+                name: validation-certs
+                sds_config:
+                  path: /opt/envoy-validation-secret.yaml
 
   clusters:
     - name: local_service
