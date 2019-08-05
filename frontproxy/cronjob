@@ -1,0 +1,1 @@
+*/15 * * * * /opt/generate-certificate.sh frontproxy >> /tmp/cron.log 2>&1

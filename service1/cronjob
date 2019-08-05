@@ -1,0 +1,1 @@
+*/15 * * * * /opt/generate-certificate.sh service1 >> /tmp/cron.log 2>&1

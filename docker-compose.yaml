@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+
+  frontproxy:
+    build:
+      context: frontproxy
+      dockerfile: Dockerfile
+    volumes:
+       - certs:/certs
+    networks:
+      - envoymesh
+    expose:
+      - "443"
+      - "9090"
+    ports:
+      - "443:443"
+      - "9090:9090"
+
+  service1:
+    build:
+      context: service1
+      dockerfile: Dockerfile
+    volumes:
+       - certs:/certs
+    networks:
+      envoymesh:
+    expose:
+      - "444"
+
+  service2:
+    build:
+      context: service2
+      dockerfile: Dockerfile
+    volumes:
+       - certs:/certs
+    networks:
+      envoymesh:
+    expose:
+      - "445"
+
+networks:
+  envoymesh: {}
+
+volumes:
+  certs:
