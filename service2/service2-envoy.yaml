@@ -26,6 +26,10 @@ static_resources:
                             prefix: "/service2"
                           route:
                             cluster: local_service
+                        - match:
+                            prefix: "/invokeService1"
+                          route:
+                            cluster: local_service
                 http_filters:
                   - name: envoy.router
                     typed_config: {}
@@ -40,7 +44,34 @@ static_resources:
                 name: validation-certs
                 sds_config:
                   path: /opt/envoy-validation-secret.yaml
-
+    - address:
+        socket_address:
+          address: 0.0.0.0
+          port_value: 446
+      filter_chains:
+        - filters:
+            - name: envoy.http_connection_manager
+              config:
+                codec_type: auto
+                stat_prefix: egress_http
+                access_log:
+                  name: envoy.file_access_log
+                  config:
+                    path: /dev/stdout
+                route_config:
+                  name: local_egress_route
+                  virtual_hosts:
+                  - name: service1
+                    domains:
+                    - "service1:446"
+                    routes:
+                    - match:
+                        prefix: "/"
+                      route:
+                        cluster: outbound-cluster
+                http_filters:
+                  - name: envoy.router
+                    typed_config: {}
   clusters:
     - name: local_service
       connect_timeout: 60s
@@ -55,7 +86,25 @@ static_resources:
                     socket_address:
                       address: 127.0.0.1
                       port_value: 8082
-
+    - name: outbound-cluster
+      connect_timeout: 100s
+      type: strict_dns
+      lb_policy: round_robin
+      load_assignment:
+        cluster_name: local_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: service1
+                      port_value: 444
+      tls_context:
+        common_tls_context:
+          tls_certificate_sds_secret_configs:
+            name: server-cert-and-key
+            sds_config:
+              path: /opt/envoy-secret.yaml
 admin:
   access_log_path: "/dev/null"
   address:

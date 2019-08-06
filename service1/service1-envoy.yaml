@@ -1,15 +1,5 @@
 static_resources:
   listeners:
-    # - address:
-    #     socketAddress:
-    #       address: "0.0.0.0"
-    #       portValue: 53
-    #   filterChains:
-    #     - filters:
-    #       - name: "envoy.tcp_proxy"
-    #         config:
-    #           stat_prefix: outbound|DNS
-    #           cluster: outbound|DNS
     - address:
         socket_address:
           address: 0.0.0.0
@@ -79,7 +69,6 @@ static_resources:
                 http_filters:
                   - name: envoy.router
                     typed_config: {}
-
   clusters:
     - name: local_service
       connect_timeout: 60s
@@ -94,14 +83,8 @@ static_resources:
                     socket_address:
                       address: 127.0.0.1
                       port_value: 8081
-    # - name: 'outbound|DNS'
-    #   connect_timeout: '100s'
-    #   type: "ORIGINAL_DST"
-    #   lb_policy: ORIGINAL_DST_LB
     - name: outbound-cluster
       connect_timeout: 100s
-      # type: original_dst
-      # lb_policy: original_dst_lb
       type: strict_dns
       lb_policy: round_robin
       load_assignment:

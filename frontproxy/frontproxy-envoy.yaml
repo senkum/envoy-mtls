@@ -84,7 +84,6 @@ static_resources:
                     socket_address:
                       address: service2
                       port_value: 445
-
 admin:
   access_log_path: "/dev/null"
   address:

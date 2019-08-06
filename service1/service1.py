@@ -13,14 +13,8 @@ def service1():
 
 @app.route('/invokeService2')
 def invokeService2():
-  validationFile = ""
-  for filename in os.listdir("/certs"):
-    root, ext = os.path.splitext(filename)
-    if root.startswith('service1-validation') and ext == '.crt':
-      validationFile = filename
-  print(validationFile)
   r = requests.get('http://service2:446/service2')
-  return "From Service1 " + r.text
+  return "From Service1 : " + r.text + "\n"
 
 if __name__ == "__main__":
   app.run(host='127.0.0.1', port=8081, debug=True)

@@ -12,4 +12,9 @@ python3 /opt/service2.py &
 # cat /opt/cronjob | crontab -
 # crond
 
+echo "Adding iptables"
+iptables -t nat -A OUTPUT -p tcp -m tcp --dport 446 -j REDIRECT --to-ports 446
+iptables-save
+
+echo "Starting envoy"
 exec envoy -c /opt/service2-envoy.yaml --service-cluster mycluster --service-node mycluster # --log-level debug
