@@ -12,4 +12,4 @@ python3 /opt/service2.py &
 # cat /opt/cronjob | crontab -
 # crond
 
-exec envoy -c /opt/service2-envoy.yaml --service-cluster mycluster --service-node mycluster 
+exec envoy -c /opt/service2-envoy.yaml --service-cluster mycluster --service-node mycluster # --log-level debug

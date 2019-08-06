@@ -1,6 +1,6 @@
 FROM envoyproxy/envoy-alpine
 
-RUN apk update && apk add python3 bash curl openssl
+RUN apk update && apk add python3 bash curl openssl inotify-tools iptables
 RUN pip3 install --upgrade pip
 RUN pip3 install -q Flask==0.11.1 requests==2.18.4
 

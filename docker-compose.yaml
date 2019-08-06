@@ -20,6 +20,7 @@ services:
     build:
       context: service1
       dockerfile: Dockerfile
+    privileged: true
     volumes:
        - certs:/certs
     networks:

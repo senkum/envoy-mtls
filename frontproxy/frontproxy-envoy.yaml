@@ -24,7 +24,15 @@ static_resources:
                           route:
                             cluster: local_service1
                         - match:
+                            prefix: "/invokeService2"
+                          route:
+                            cluster: local_service1
+                        - match:
                             prefix: "/service2"
+                          route:
+                            cluster: local_service2
+                        - match:
+                            prefix: "/invokeService1"
                           route:
                             cluster: local_service2
                 http_filters:

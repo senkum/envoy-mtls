@@ -1,6 +1,6 @@
 # Generate certificate
 number=`(shuf -i 1-1000 -n 1)`
-echo "Generating Certificate " $service-$number
+echo "Generating Validation Certificate " $1-$number
 
 cat /certs/$2.crt /certs/$3.crt > /certs/$1-validation$number.crt
 cat > /opt/envoy-validation-secret-new.yaml <<EOF
